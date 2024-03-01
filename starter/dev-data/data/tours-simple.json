@@ -135,5 +135,7 @@
     "startDates": ["2021-12-16,10:00", "2022-01-16,10:00", "2022-12-12,10:00"]
   },
   { "id": 9, "name": "joe", "duration": "10 days", "difficulty": "easy" },
-  { "id": 10, "name": "joe", "duration": "10 days", "difficulty": "easy" }
+  { "id": 10, "name": "joe", "duration": "10 days", "difficulty": "easy" },
+  { "id": 11, "name": "joe", "duration": "10 days", "difficulty": "easy" },
+  { "id": 12, "name": "joe", "duration": "10 days", "difficulty": "easy" }
 ]
