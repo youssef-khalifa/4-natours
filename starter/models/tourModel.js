@@ -5,7 +5,10 @@ const tourSchema = new Mongoose.Schema({
     required: [true, 'a tour must have a name'],
     unique: true,
     trim: true,
+    maxlength: [40, 'A tour name must have less or equal then 40 characters'],
+    minlength: [10, 'A tour name must have more or equal then 10 characters'],
   },
+  slug: String,
   duration: {
     type: Number,
     required: [true, 'Atour must have a duration'],
@@ -19,15 +22,11 @@ const tourSchema = new Mongoose.Schema({
     required: [true, 'Atour must have a difficulty'],
     trim: true,
   },
-  rating: {
+  ratingsAverage: {
     type: Number,
     default: 4.5,
   },
-  ratingAvg: {
-    type: Number,
-    default: 4.5,
-  },
-  ratingQuantity: {
+  ratingsQuantity: {
     type: Number,
     default: 0,
   },
@@ -37,10 +36,11 @@ const tourSchema = new Mongoose.Schema({
   },
   priceDiscount: {
     type: Number,
-    summary: {
-      type: String,
-      trim: true,
-    },
+  },
+  summary: {
+    type: String,
+    trim: true,
+    required: [true, 'A tour must have a description'],
   },
   description: {
     type: String,
