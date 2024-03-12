@@ -23,11 +23,16 @@ const tourSchema = new Mongoose.Schema(
     difficulty: {
       type: String,
       required: [true, 'Atour must have a difficulty'],
-      trim: true,
+      enum: {
+        values: ['easy', 'medium', 'difficult'],
+        message: 'Difficulty is either: easy, medium, difficult',
+      },
     },
     ratingsAverage: {
       type: Number,
       default: 4.5,
+      min: [1, 'Rating must be above 1.0'],
+      max: [5, 'Rating must be below 5.0'],
     },
     ratingsQuantity: {
       type: Number,
@@ -39,6 +44,13 @@ const tourSchema = new Mongoose.Schema(
     },
     priceDiscount: {
       type: Number,
+      validate: {
+        validator: function (val) {
+          // this only points to current doc on NEW document creation
+          return val < this.price;
+        },
+        message: 'Discount price ({VALUE}) should be below regular price',
+      },
     },
     summary: {
       type: String,
@@ -60,6 +72,10 @@ const tourSchema = new Mongoose.Schema(
       select: false,
     },
     startDates: [Date],
+    secretTour: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -71,9 +87,30 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
 
-tourSchema.pre('save',function(next){
+tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
-})
+});
+
+tourSchema.pre(/^find/, function (next) {
+  this.find({ secretTour: { $ne: true } });
+
+  this.start = Date.now();
+  next();
+});
+
+tourSchema.post(/^find/, function (docs, next) {
+  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+  next();
+});
+
+// AGGREGATION MIDDLEWARE
+tourSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+
+  console.log(this.pipeline());
+  next();
+});
+
 const Tour = Mongoose.model('Tour', tourSchema);
 module.exports = Tour;
