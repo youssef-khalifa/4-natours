@@ -12,7 +12,6 @@ dotenv.config({ path: './config.env' });
 
 const tourRourter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
-const ExpressMongoSanitize = require('express-mongo-sanitize');
 
 const app = express();
 app.use(helmet());
