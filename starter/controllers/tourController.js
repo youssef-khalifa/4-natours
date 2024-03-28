@@ -16,7 +16,7 @@ exports.getAllTours = catchAsynch(async (req, res, next) => {
     .sort()
     .limitFields()
     .paginatie();
-  const tours = await features.query;
+  const tours = await features.query
   //send respons
   res.status(200).json({
     status: 'success',
@@ -28,10 +28,10 @@ exports.getAllTours = catchAsynch(async (req, res, next) => {
 });
 
 exports.getTour = catchAsynch(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id);
+  const tour = await Tour.findById(req.params.id)
 
-  if(!tour){
-    return next(new AppError('no tour is found with that id ',404))
+  if (!tour) {
+    return next(new AppError('no tour is found with that id ', 404));
   }
   res.status(200).json({
     status: 'success',
@@ -56,8 +56,8 @@ exports.updateTour = catchAsynch(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
-  if(!tour){
-    return next(new AppError('no tour is found with that id ',404))
+  if (!tour) {
+    return next(new AppError('no tour is found with that id ', 404));
   }
   res.status(200).json({
     status: 'success',
@@ -69,8 +69,8 @@ exports.updateTour = catchAsynch(async (req, res, next) => {
 
 exports.deleteTour = catchAsynch(async (req, res, next) => {
   const tour = await Tour.findByIdAndDelete(req.params.id);
-  if(!tour){
-    return next(new AppError('no tour is found with that id ',404))
+  if (!tour) {
+    return next(new AppError('no tour is found with that id ', 404));
   }
   res.status(204).json({
     status: 'success',
