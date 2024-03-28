@@ -2,7 +2,9 @@ const express = require('express');
 const tourController = require('./../controllers/tourController');
 const router = express.Router();
 const authController = require('./../controllers/authController');
-// router.param('id',tourController.checkId );
+const reviewRouter=require('./reviewRoutes')
+
+router.use('/:tourId/reviews',reviewRouter)
 
 router
   .route('/top-5-cheap')
@@ -24,4 +26,5 @@ router
   .patch(tourController.updateTour)
   .delete(authController.protect,authController.restrictTo('admin','lead-guide') ,  tourController.deleteTour);
 
+  
 module.exports = router;

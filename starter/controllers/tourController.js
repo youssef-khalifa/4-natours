@@ -16,7 +16,7 @@ exports.getAllTours = catchAsynch(async (req, res, next) => {
     .sort()
     .limitFields()
     .paginatie();
-  const tours = await features.query
+  const tours = await features.query.populate('reviews')
   //send respons
   res.status(200).json({
     status: 'success',
@@ -28,7 +28,7 @@ exports.getAllTours = catchAsynch(async (req, res, next) => {
 });
 
 exports.getTour = catchAsynch(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id)
+  const tour = await Tour.findById(req.params.id).populate('reviews')
 
   if (!tour) {
     return next(new AppError('no tour is found with that id ', 404));
