@@ -88,7 +88,8 @@ exports.getMonthlyPlan = catchAsynch(async (req, res, next) => {
     },
   });
 });
-
+// /tours-within/:distance/center/:latlng/unit/:unit
+// /tours-within/233/center/34.111745,-118.113491/unit/mi
 exports.getToursWithin = catchAsynch(async (req, res, next) => {
   const { distance, latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');

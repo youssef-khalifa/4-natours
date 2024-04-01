@@ -10,7 +10,7 @@ const sendEmail =async (options) => {
       pass: process.env.EMAIL_PASSWORD
     },
   });
-  //2define email options
+  // 2) Define the email options
   const mailOptions={
     from: 'youssef khalifa <admin@gmail.com>',
     to: options.email,
@@ -18,7 +18,7 @@ const sendEmail =async (options) => {
     text: options.message,
     // html:
   }
-  //3 send email with nodemailer
+  // 3) Actually send the email
   await transporter.sendMail(mailOptions)
 };
 

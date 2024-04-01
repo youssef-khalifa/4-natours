@@ -24,8 +24,10 @@ exports.updateMe = catchAsynch(async (req, res, next) => {
       )
     );
   }
-  //2 update user document
+  // 2) Filtered out unwanted fields names that are not allowed to be updated
   const filteredBody = filterObj(req.body, 'name', 'email');
+    // 3) Update user document
+
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,
@@ -53,5 +55,7 @@ exports.createUser = (req, res) => {
 
 exports.getAllUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);
+
+// Do NOT update passwords with this!
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
