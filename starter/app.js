@@ -14,6 +14,8 @@ const globalErrorHandler = require('./controllers/errorController');
 const tourRourter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
+
 const viewRouter = require('./routes/viewRoutes');
 
 dotenv.config({ path: './config.env' });
@@ -77,6 +79,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRourter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Cant find ${req.originalUrl} on this server!`, 404));
